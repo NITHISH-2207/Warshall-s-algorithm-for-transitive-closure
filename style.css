@@ -1,0 +1,225 @@
+/* ============================================
+   Warshall's Algorithm — Clean & Minimal UI
+   ============================================ */
+
+/* --- Google Font Import --- */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap');
+
+/* --- CSS Variables --- */
+:root {
+  --bg:        #f4f3ef;
+  --surface:   #ffffff;
+  --border:    #d8d5cc;
+  --accent:    #1a1a2e;
+  --accent2:   #e63946;
+  --text:      #1a1a2e;
+  --muted:     #6b6860;
+  --highlight: #fff3cd;   /* cell highlighted during a k-step */
+  --changed:   #ffe0e3;   /* cell that changed value */
+  --radius:    6px;
+  --mono:      'IBM Plex Mono', monospace;
+  --sans:      'IBM Plex Sans', sans-serif;
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 40px 16px 80px;
+}
+
+/* --- Page Layout --- */
+.page-wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* --- Header --- */
+header {
+  text-align: center;
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--accent);
+}
+
+header h1 {
+  font-family: var(--mono);
+  font-size: 1.9rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-weight: 300;
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+/* --- Card --- */
+.card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 28px 24px;
+  margin-bottom: 24px;
+}
+
+.card h2 {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* --- Hint Text --- */
+.hint {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 14px;
+  line-height: 1.7;
+}
+
+.hint code {
+  font-family: var(--mono);
+  background: var(--bg);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 0.82rem;
+  color: var(--text);
+}
+
+/* --- Textarea --- */
+textarea {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+textarea:focus {
+  border-color: var(--accent);
+}
+
+/* --- Button --- */
+button#compute-btn {
+  margin-top: 14px;
+  padding: 10px 28px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button#compute-btn:hover  { background: #2e2e50; }
+button#compute-btn:active { transform: scale(0.97); }
+
+/* --- Matrix Table --- */
+table.matrix {
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-family: var(--mono);
+}
+
+table.matrix td {
+  width: 38px;
+  height: 38px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1.5px solid var(--border);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+/* Cell value = 0 */
+table.matrix td.zero {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* Cell value = 1 */
+table.matrix td.one {
+  color: var(--accent);
+}
+
+/* Cell that changed from 0→1 in this step */
+table.matrix td.changed {
+  background: var(--changed);
+  color: var(--accent2);
+}
+
+/* Row/col active in current k iteration */
+table.matrix td.active-k {
+  background: var(--highlight);
+}
+
+/* --- Step Blocks --- */
+.step-block {
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.step-block:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.step-label {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.step-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 10px;
+  font-family: var(--mono);
+}
+
+/* --- Final Matrix highlight --- */
+#final-matrix table.matrix td.one {
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+/* --- Error Message --- */
+.error-msg {
+  color: var(--accent2);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  margin-top: 10px;
+}
+
+/* --- Utility --- */
+.hidden { display: none; }
