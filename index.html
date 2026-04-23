@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Warshall's Algorithm — Transitive Closure</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <header>
+      <h1>Warshall's Algorithm</h1>
+      <p class="subtitle">Transitive Closure of a Directed Graph</p>
+    </header>
+
+    <!-- Input Section -->
+    <section class="card" id="input-section">
+      <h2>Input Adjacency Matrix</h2>
+      <p class="hint">
+        Enter rows separated by commas, values separated by spaces.<br>
+        Example for a 3×3 matrix: <code>0 1 0, 0 0 1, 0 0 0</code>
+      </p>
+      <textarea id="matrix-input" rows="4" placeholder="0 1 0, 0 0 1, 0 0 0"></textarea>
+      <button id="compute-btn" onclick="runWarshall()">Compute</button>
+    </section>
+
+    <!-- Output Section (hidden until computation) -->
+    <div id="output-section" class="hidden">
+
+      <!-- Initial Matrix -->
+      <section class="card" id="initial-section">
+        <h2>Initial Matrix</h2>
+        <div id="initial-matrix"></div>
+      </section>
+
+      <!-- Step-by-step iterations -->
+      <section class="card" id="steps-section">
+        <h2>Step-by-Step Iterations</h2>
+        <div id="steps-container"></div>
+      </section>
+
+      <!-- Final Result -->
+      <section class="card" id="result-section">
+        <h2>Final Transitive Closure</h2>
+        <div id="final-matrix"></div>
+      </section>
+
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
