@@ -155,6 +155,23 @@ table.matrix td {
   transition: background 0.3s;
 }
 
+/* Responsive sizing for larger matrices */
+@media (max-width: 768px) {
+  table.matrix td {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  table.matrix td {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+}
+
 /* Cell value = 0 */
 table.matrix td.zero {
   color: var(--muted);
